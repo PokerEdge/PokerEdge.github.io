@@ -1,15 +1,86 @@
+
+//Initially hide the text input that should only show if user selects "Other" from the "Job Role" dropdown menu
+$('#other-title').hide();
+
+//Apply handler to dropdown menu to take actions when the values change
+$('select#title').change(function(){
+
+  checkJobRoleValue();
+
+});
+
+$('select#design').change(function(){
+
+  checkDesignValue();
+
+});
+
+function checkJobRoleValue(){
+
+  //Function is to check to see which value is selected
+  if($('select#title').val() === 'other'){
+
+    //Show text input field if "other" option is selected
+    $('#other-title').show();
+
+  } else{
+
+    //Hide text input field if non-"other" option is selected
+    $('#other-title').hide();
+
+  }
+}
+
+
+function checkDesignValue(){
+
+  //Show all items in menu 
+    //This is done by default
+
+  //Check if selected design value is "js puns" or "heart js"
+  if($('select#design').val() === 'js puns'){
+
+    //If design value is "js puns", color menu should display options "Cornflower Blue", "Dark Slate Grey" and "Gold" (top 3 elements in list)
+
+
+  } else if {
+
+    //Else if design value is "heart js", color menu should display options "Tomato", "Steel Blue" and "Dim Grey" (bottom 3 elements in list)
+
+
+  }  else{
+
+    //Show all choices in dropdown menu
+
+
+  }
+
+
+}
+
+
+// Get the value from a dropdown select even easier
+//$( "select.foo" ).val();
+
+
+  // Get the value from a checked checkbox
+  //$( "input:checkbox:checked" ).val();
+
+
+
+
 /*
 
 ********** INTERACTIVE FORM PROJECT REQUIREMENTS **********
 
-Create and link a JavaScript file to index.html
+**Create and link a JavaScript file to index.html
   Create a JavaScript file inside the "js" folder and link it to index.html
   If you're using jQuery, link index.html to the latest version of jQuery
 
-Set focus on the first text field:
+**Set focus on the first text field:
   When the page loads, give focus to the first text field
 
-"Job Role" section of the form: reveal a text field when the "Other" option 
+**"Job Role" section of the form: reveal a text field when the "Other" option 
 is selected from the "Job Role" drop down menu
   Make sure you add an text input field
   Use the id of "other-title" for the field
@@ -77,4 +148,4 @@ Style the "select" menus (drop down menus) on the form, so they match the stylin
 
 Validate the credit card number to make sure it's entered in a valid format
 
-/*
+*/

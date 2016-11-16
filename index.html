@@ -21,7 +21,7 @@
         <legend>Basic Info</legend>
         
         <label for="name">Name:</label>
-        <input type="text" id="name" name="user_name">
+        <input type="text" id="name" name="user_name" autofocus>
         
         <label for="mail">Email:</label>
         <input type="email" id="mail" name="user_email">
@@ -34,7 +34,8 @@
           <option value="designer">Designer</option>          
           <option value="student">Student</option>
           <option value="other">Other</option>  
-        </select>           
+        </select>
+        <input type="text" id="other-title" placeholder="Your Title">           
       </fieldset>
       
       <fieldset class="shirt">
@@ -151,5 +152,9 @@
     </form>
 
 	</div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script type="text/javascript" src="js/main.js"></script>
+
 </body>
 </html>
