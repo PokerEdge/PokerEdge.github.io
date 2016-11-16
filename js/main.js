@@ -15,7 +15,7 @@ $('select#design').change(function(){
 
 });
 
-$('input:checkbox').change(function(){
+$('input:checkbox').change(function(){ 
 
   checkCheckBox();
 
