@@ -15,6 +15,12 @@ $('select#design').change(function(){
 
 });
 
+$('input:checkbox').change(function(){
+
+  checkCheckBox();
+
+});
+
 function checkJobRoleValue(){
 
   //Function is to check to see which value is selected
@@ -34,37 +40,52 @@ function checkJobRoleValue(){
 
 function checkDesignValue(){
 
-  //Show all items in menu 
-    //This is done by default
-
   //Check if selected design value is "js puns" or "heart js"
   if($('select#design').val() === 'js puns'){
 
     //If design value is "js puns", color menu should display options "Cornflower Blue", "Dark Slate Grey" and "Gold" (top 3 elements in list)
+    $('select#color').children().show();
+    $('select#color').children(":nth-child(-n+4)").hide();
 
 
-  } else if {
+  } else if ($('select#design').val() === 'heart js') {
 
     //Else if design value is "heart js", color menu should display options "Tomato", "Steel Blue" and "Dim Grey" (bottom 3 elements in list)
+    $('select#color').children().show();
+    $('select#color').children(":nth-child(n+5)").hide();
 
-
-  }  else{
+  }  else {
 
     //Show all choices in dropdown menu
-
+    $('select#color').children().show();
 
   }
+
+}
+
+
+function checkCheckBox(){
+
+  // "Register for Activities" section of the form:
+  //   Some events are at the same time as others. If the user selects a workshop, don't allow selection 
+  //     of a workshop at the same date and time -- you should disable the checkbox and visually indicate that 
+  //     the workshop in the competing time slot isn't available.
+  //   When a user unchecks an activity, make sure that competing activities (if there are any) are no longer 
+  //     disabled.
+  //   As a user selects activities to register for, a running total is listed below the list of checkboxes. 
+  //     For example, if the user selects "Main conference" then Total: $200 should appear. If they add 1 workshop, 
+  //     the total should change to Total: $300.
+
+
+  // Get the value from a checked checkbox
+  console.log($('input:checkbox:checked').val());
+
 
 
 }
 
 
-// Get the value from a dropdown select even easier
-//$( "select.foo" ).val();
 
-
-  // Get the value from a checked checkbox
-  //$( "input:checkbox:checked" ).val();
 
 
 
@@ -86,16 +107,14 @@ is selected from the "Job Role" drop down menu
   Use the id of "other-title" for the field
   Add placeholder text of "Your Title" for the field
 
-"T-Shirt Info" section of the form: for the T-Shirt color menu, only display the options that match 
+**"T-Shirt Info" section of the form: for the T-Shirt color menu, only display the options that match 
 the design selected in the "Design" menu.
-
   If the user selects "Theme - JS Puns" then the color menu should only display "Cornflower Blue," 
     "Dark Slate Grey," and "Gold."
   If the user selects "Theme - I ♥ JS" then the color menu should only display "Tomato," "Steel Blue," 
     and "Dim Grey."
 
 "Register for Activities" section of the form:
-
   Some events are at the same time as others. If the user selects a workshop, don't allow selection 
     of a workshop at the same date and time -- you should disable the checkbox and visually indicate that 
     the workshop in the competing time slot isn't available.
@@ -132,7 +151,7 @@ When JavaScript is switched off or unavailable, all information required to be f
 
 Before you submit your project for review, make sure you can check off all of the items on the Student Project 
   Submission Checklist. The checklist is designed to help you make sure you’ve met the grading requirements 
-  and that your project is complete and ready to be submitted!
+  and that your project is complete and ready to be submitted!  
 
 */
 
