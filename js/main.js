@@ -15,7 +15,7 @@ $('select#design').change(function(){
 
 });
 
-$('input:checkbox').change(function(){ 
+$('input:checkbox').change(function(){ //Event handler isn't correct because checkbox value is always the same
 
   checkCheckBox();
 
@@ -75,6 +75,7 @@ function checkCheckBox(){
   //   As a user selects activities to register for, a running total is listed below the list of checkboxes. 
   //     For example, if the user selects "Main conference" then Total: $200 should appear. If they add 1 workshop, 
   //     the total should change to Total: $300.
+      // Gecko and IE will ignore the value specified in the HTML source, if the value was changed before the reload
 
 
   // Get the value from a checked checkbox
