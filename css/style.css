@@ -131,6 +131,10 @@ button:hover {
 	margin-bottom: 0;
 }
 
+.activities span {
+	font-weight: bold;
+}
+
 .credit-card {
 	margin-top: 1.25em;
 }
