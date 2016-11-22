@@ -40,6 +40,7 @@ $('#ccTitle').css({'color': '#000', 'font-weight':'normal'});
 $('#zipTitle').css({'color': '#000', 'font-weight':'normal'});
 $('#cvvTitle').css({'color': '#000', 'font-weight':'normal'});
 
+
 //Initially hide the text input that should only show if user selects "Other" from the "Job Role" dropdown menu
 $('#other-title').hide();
 
@@ -288,10 +289,27 @@ function validateForm(){
   //READ ABOUT ERROR HANDLING ARRAYS
   
   //HIDE AND RESET ALL ERROR STYLINGS AFTER INPUT FORMS ARE RESET
+  // hideErrors();
 
   //Check if name input text field is empty
     //If name input text is not empty, then it is valid
-  if($('input#name').indexOf() !== -1 &&  
+
+  // $('input#name').submit(function(e)  {
+  //   $('button[type="submit"]').each(function(e) {
+  //     var username = $(this);
+  //     var name_regex = /^[a-zA-Z\-]+$/;
+  //     if(!name_regex.test(username.val())){ 
+  //       alert('this is not valid name'); 
+  //       e.preventDefault(); 
+  //       //Add show name error message and style
+
+  //       //Not return false
+  //       return false;
+  //     }
+  //   });    
+  // });
+
+
 
   //Check if email input text field contains a valid email address of the format dave@teamtreehouse.com
     //Use a "Regular expression" - linked from the Treehouse instructions
@@ -300,6 +318,21 @@ function validateForm(){
     //check for text after @ symbol
     //check email address ends in '.com'
       //Check that the final period in the email address is before the string "com"
+  
+
+  $('input#mail').submit(function(e)  {
+    $('button[type="submit"]').each(function(e) {
+      var email_address = $(this);
+      var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+      if(!email_regex.test(email_address.val()) && email_address.val() != ""){ 
+        alert('this is not valid email'); 
+        e.preventDefault();
+        //Add show email error message and style
+
+        return false;  
+      }
+    });    
+  });
 
   //Check that at least 1 Activity is checked
 
@@ -311,16 +344,28 @@ function validateForm(){
       //Check that card number is exactly 16 digits in length
         //Check that input is all numbers
       //(OR use the plug in to validate the CCN)
+  
+
+// $('input#cc_number').validateCreditCard(function(result)
+//     {
+//         alert(this.val());
+//     });
+
+
     //Check that zip code is valid
       //Check that input is all numbers
       //Check that zip code number is exactly 5 digits in length
       //(OR use plug in to validate zip code)
+      // regEx is ^\d{5}(-\{4})?$
+
     //Check that CVV is valid
       //Check that input is all numbers
-      //Check that input is exactly 3 characters in length
+      //Check that input is exactly 3-4 characters in length
+      // regEx is /^\d{3,4}$/
+      // if (/^\d{3,4}$/.test(value)){return false;}
+
 
 }
-
 
 
 /*
