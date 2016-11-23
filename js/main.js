@@ -1,3 +1,6 @@
+//REMOVE CSS FROM MESSAGES BELOW BECAUSE THEY NEED TO BE RE-ADDED FOR WHEN THE ERROR MESSSAGE IS SHOWN
+
+
 //Give focus to input#name text input on page load
 $('input#name').focus();
 
@@ -10,10 +13,10 @@ $('#nameLabel').append('<span id="nameError">' + ' (please provide your name)' +
 $('#emailLabel').append('<span id="emailError">' + ' (please provide a valid email address)' + '</span>').css({'color': '#9f3b53', 'font-weight':'500'});
 
 $('.shirt legend').append('<br><span id="shirtError">' + ' Don\'t forget to pick a T-shirt' + '</span>');
-$('.shirt span').css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
+$('#shirtError').css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
 
-$('.activities legend').append('<br><span id="shirtError">' + ' Please select an Activity' + '</span>');
-$('.activities span').css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
+$('.activities legend').append('<br><span id="activityError">' + ' Please select an Activity' + '</span>');
+$('#activityError').css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
 
 $('#ccTitle').css({'color': '#9f3b53', 'font-weight':'500'});
 $('#zipTitle').css({'color': '#9f3b53', 'font-weight':'500'});
@@ -272,6 +275,10 @@ function checkPaymentOption(){
 
 function validateForm(){
 
+//MAKE USE OF LOCAL COUNTER THAT IF === 0 THEN FORM SUBMITS, ELSE PREVENTDEFAULT();
+//CHECK THAT ERROR AND SPAN IDs MATCH
+
+
   //   Form validation: display error messages and don't let the user submit the form (submit() or reset() register button depending on conditions) if 
   //   any of these validation errors exist:
   //     Name field can't be empty
@@ -284,6 +291,7 @@ function validateForm(){
 
   //Set conditions for form submit() - All form elements validated
 
+  // $('#nameError').show().css({'color': '#9f3b53', 'font-weight':'500'});
   console.log("Click handler is firing");
 
   //READ ABOUT ERROR HANDLING ARRAYS
@@ -293,18 +301,25 @@ function validateForm(){
 
   //Check if name input text field is empty
     //If name input text is not empty, then it is valid
+if($('input#name').val() === ""){
+    $('#nameError').show().css({'color': '#9f3b53', 'font-weight':'500'});
+    // preventDefault();
+}
+
 
   // $('input#name').submit(function(e)  {
   //   $('button[type="submit"]').each(function(e) {
   //     var username = $(this);
-  //     var name_regex = /^[a-zA-Z\-]+$/;
-  //     if(!name_regex.test(username.val())){ 
-  //       alert('this is not valid name'); 
-  //       e.preventDefault(); 
-  //       //Add show name error message and style
+  //     // var name_regex = /^[a-zA-Z\-]+$/;
+  //     // if(!name_regex.test(username.val())){ 
+  //     //   alert('this is not valid name'); 
+  //     if(username.length === 0){
+  //         //Call error message and styling
+  //         $('#nameError').show().css({'color': '#9f3b53', 'font-weight':'500'});
 
-  //       //Not return false
-  //       return false;
+  //         e.preventDefault();
+  //         // return false;
+  //       }
   //     }
   //   });    
   // });
@@ -320,21 +335,37 @@ function validateForm(){
       //Check that the final period in the email address is before the string "com"
   
 
-  $('input#mail').submit(function(e)  {
+ // $('input#mail').submit(function(e)  {
     $('button[type="submit"]').each(function(e) {
-      var email_address = $(this);
+      var email_address = $('input#mail');
       var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
       if(!email_regex.test(email_address.val()) && email_address.val() != ""){ 
-        alert('this is not valid email'); 
-        e.preventDefault();
-        //Add show email error message and style
+        
+        //Call error message and styling
+        $('#emailError').show().css({'color': '#9f3b53', 'font-weight':'500'});
 
-        return false;  
+        // alert('this is not valid email'); 
+        // e.preventDefault();
+        // return false;  
       }
     });    
-  });
+//  });
+
+
+  //Check that t-shirt has been chosen else display below error message
+    // $('#shirtError').show().css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
+
 
   //Check that at least 1 Activity is checked
+    //Loop through all checkboxes
+    //Check if each checkbox $('#express').is(':checked'); (?) and then
+    //If number of checkboxes checked === 0, preventDefault() and display error message
+
+if ($("input:checkbox:checked").length === 0){
+  //No checkboxes are checked
+  $('#activityError').show().css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
+
+}
 
   //Payment option must be selected (CC is selected by defualt, but can check if payment option val === "Select Payment Method")
 
