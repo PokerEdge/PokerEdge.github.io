@@ -371,37 +371,33 @@ function validateForm(){
   
 
 var ccNumber = $('#cc-number');
-console.log(ccNumber.validateCreditCard());
 
-//Using creditCardValidator plugin to check for a valid credit card number based on 3 criteria
-if(ccNumber.validateCreditCard().length_valid && ccNumber.validateCreditCard().luhn_valid && ccNumber.validateCreditCard().valid){
+//Using creditCardValidator plugin to check for a valid credit card number based on 3 criteria, if invalid, display error styling
+if(!ccNumber.validateCreditCard().length_valid && !ccNumber.validateCreditCard().luhn_valid && !ccNumber.validateCreditCard().valid){
 
-    //   //Show credit card title error message
-    console.log("card number is valid");
-
-} else{
   $('#ccTitle').css({'color': '#9f3b53', 'font-weight':'500'});
   errorCount++;
+    
 }
 
 
 
-    //Check that zip code is valid
-      // regEx is ^\d{5}(-\{4})?$
-  var zip = $('input#zip');
-  var zip_regex = /^\d{5}(-\{4})?$/;
   
+  var zip = $('input#zip');
+  var zip_regex = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+  
+  //Check that zip code is valid, if not, apply error style
   if(!zip_regex.test(zip.val()) && !zip.val() != ""){
     
-    //Zip is not valid style applied
     $('#zipTitle').css({'color': '#9f3b53', 'font-weight':'500'});
     errorCount++;
 
   }
 
-    //Check that CVV is valid and if not apply error styling
   var cvv = $("input#cvv");
   var cvv_regex = /^\d{3,4}$/;
+
+  //Check that CVV is valid and if not apply error styling
   if(!cvv_regex.test(cvv.val()) && !cvv.val() != ""){ 
         
     $('#cvvTitle').css({'color': '#9f3b53', 'font-weight':'500'});
