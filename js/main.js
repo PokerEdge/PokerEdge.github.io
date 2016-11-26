@@ -36,7 +36,7 @@ $('#emailLabel').css({'color': '#000', 'font-weight':'normal'});
 $('.shirt span').hide();
 
   //Hide 'Please select an Activity' error message
-$('.activities legend').hide();
+$('#activityError').hide();
 
   //Hide (reset) credit card error styles
 $('#ccTitle').css({'color': '#000', 'font-weight':'normal'});
@@ -277,7 +277,42 @@ function validateForm(){
 
 //MAKE USE OF LOCAL COUNTER THAT IF === 0 THEN FORM SUBMITS, ELSE PREVENTDEFAULT();
 //CHECK THAT ERROR AND SPAN IDs MATCH
+//RESET ALL STYLES AND MESSAGES TO NORMAL
 
+  //Hide error messages and stylings on page load
+    //Hide "please provide your name" error massesage and reset message style
+  $('#nameError').hide();
+  $('#nameLabel').css({'color': '#000', 'font-weight':'normal'});
+
+    //Hide "please provide a valid email address" error message and reset message style
+  $('#emailError').hide();
+  $('#emailLabel').css({'color': '#000', 'font-weight':'normal'});
+
+    //Hide 'Don\'t forget to pick a T-shirt' T-shirt choice error message
+  $('#shirtError').hide();
+
+    //Hide 'Please select an Activity' error message
+  $('#activityError').hide();
+
+    //Hide (reset) credit card error styles
+  $('#ccTitle').css({'color': '#000', 'font-weight':'normal'});
+  $('#zipTitle').css({'color': '#000', 'font-weight':'normal'});
+  $('#cvvTitle').css({'color': '#000', 'font-weight':'normal'});
+
+
+  //Initially hide the text input that should only show if user selects "Other" from the "Job Role" dropdown menu
+  $('#other-title').hide();
+
+  //Hides all color selections until a Design element is chosen from the Deisgn drop down menu
+  $('select#color').children(":nth-child(n+1)").hide();
+
+  //Hide all payment option information on page load that is to be displayed after user chooses an option from the Payment Info dropdown menu
+  $('div#credit-card').show();
+  $('div#paypal-option').hide();
+  $('div#bitcoin-option').hide();
+
+  
+  var errorCount = 0;
 
   //   Form validation: display error messages and don't let the user submit the form (submit() or reset() register button depending on conditions) if 
   //   any of these validation errors exist:
@@ -290,113 +325,103 @@ function validateForm(){
   //     code, and a 3 number CVV value.
 
   //Set conditions for form submit() - All form elements validated
+    //errorCounter === 0 
 
-  // $('#nameError').show().css({'color': '#9f3b53', 'font-weight':'500'});
-  console.log("Click handler is firing");
-
-  //READ ABOUT ERROR HANDLING ARRAYS
-  
-  //HIDE AND RESET ALL ERROR STYLINGS AFTER INPUT FORMS ARE RESET
-  // hideErrors();
 
   //Check if name input text field is empty
     //If name input text is not empty, then it is valid
-if($('input#name').val() === ""){
+
+  var nameInput = $('input#name');   
+  if(nameInput.val() === ""){
     $('#nameError').show().css({'color': '#9f3b53', 'font-weight':'500'});
+    errorCount++;
     // preventDefault();
-}
+  }
 
 
-  // $('input#name').submit(function(e)  {
-  //   $('button[type="submit"]').each(function(e) {
-  //     var username = $(this);
-  //     // var name_regex = /^[a-zA-Z\-]+$/;
-  //     // if(!name_regex.test(username.val())){ 
-  //     //   alert('this is not valid name'); 
-  //     if(username.length === 0){
-  //         //Call error message and styling
-  //         $('#nameError').show().css({'color': '#9f3b53', 'font-weight':'500'});
-
-  //         e.preventDefault();
-  //         // return false;
-  //       }
-  //     }
-  //   });    
-  // });
-
-
-
-  //Check if email input text field contains a valid email address of the format dave@teamtreehouse.com
-    //Use a "Regular expression" - linked from the Treehouse instructions
-    //check for text before @ symbol
-    //check that email contains @ symbol
-    //check for text after @ symbol
-    //check email address ends in '.com'
-      //Check that the final period in the email address is before the string "com"
-  
-
- // $('input#mail').submit(function(e)  {
-    $('button[type="submit"]').each(function(e) {
-      var email_address = $('input#mail');
-      var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
-      if(!email_regex.test(email_address.val()) && email_address.val() != ""){ 
+  var email_address = $('input#mail');
+  var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+  if(!email_regex.test(email_address.val()) && email_address.val() != ""){ 
         
-        //Call error message and styling
-        $('#emailError').show().css({'color': '#9f3b53', 'font-weight':'500'});
-
-        // alert('this is not valid email'); 
-        // e.preventDefault();
-        // return false;  
-      }
-    });    
-//  });
+    //Call error message and styling
+    $('#emailError').show().css({'color': '#9f3b53', 'font-weight':'500'});
+    errorCount++;
+    // e.preventDefault();
+    // return false;  
+  }  
 
 
   //Check that t-shirt has been chosen else display below error message
-    // $('#shirtError').show().css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
+  if ($('#color:selected').length === 0){
 
+    $('#shirtError').show().css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
 
-  //Check that at least 1 Activity is checked
-    //Loop through all checkboxes
-    //Check if each checkbox $('#express').is(':checked'); (?) and then
-    //If number of checkboxes checked === 0, preventDefault() and display error message
+  }
 
-if ($("input:checkbox:checked").length === 0){
-  //No checkboxes are checked
-  $('#activityError').show().css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
+  //Check if an activity is checked, and if not, display error message and style
+  if ($("input:checkbox:checked").length === 0){
+    
+    $('#activityError').show();
+    errorCount++;
 
-}
+  }
 
   //Payment option must be selected (CC is selected by defualt, but can check if payment option val === "Select Payment Method")
-
-  //Check that credit card is valid (can use a plug in to actually check if the card is real and is valid)
-    //Write new function for credit card validation to help with plug in implementation
-    //Check that card number is valid
-      //Check that card number is exactly 16 digits in length
-        //Check that input is all numbers
-      //(OR use the plug in to validate the CCN)
+//*************************************************
   
 
-// $('input#cc_number').validateCreditCard(function(result)
-//     {
-//         alert(this.val());
-//     });
+var ccNumber = $('#cc-number');
+console.log(ccNumber.validateCreditCard());
+
+//Using creditCardValidator plugin to check for a valid credit card number based on 3 criteria
+if(ccNumber.validateCreditCard().length_valid && ccNumber.validateCreditCard().luhn_valid && ccNumber.validateCreditCard().valid){
+
+    //   //Show credit card title error message
+    console.log("card number is valid");
+
+} else{
+  $('#ccTitle').css({'color': '#9f3b53', 'font-weight':'500'});
+  errorCount++;
+}
+
 
 
     //Check that zip code is valid
-      //Check that input is all numbers
-      //Check that zip code number is exactly 5 digits in length
-      //(OR use plug in to validate zip code)
       // regEx is ^\d{5}(-\{4})?$
+  var zip = $('input#zip');
+  var zip_regex = /^\d{5}(-\{4})?$/;
+  
+  if(!zip_regex.test(zip.val()) && !zip.val() != ""){
+    
+    //Zip is not valid style applied
+    $('#zipTitle').css({'color': '#9f3b53', 'font-weight':'500'});
+    errorCount++;
 
-    //Check that CVV is valid
-      //Check that input is all numbers
-      //Check that input is exactly 3-4 characters in length
-      // regEx is /^\d{3,4}$/
-      // if (/^\d{3,4}$/.test(value)){return false;}
+  }
+
+    //Check that CVV is valid and if not apply error styling
+  var cvv = $("input#cvv");
+  var cvv_regex = /^\d{3,4}$/;
+  if(!cvv_regex.test(cvv.val()) && !cvv.val() != ""){ 
+        
+    $('#cvvTitle').css({'color': '#9f3b53', 'font-weight':'500'});
+    errorCount++;
+
+    // e.preventDefault();
+    // return false;  
+  }
+
+  
+  // if (errorCount != 0){
+  //   preventDefault();
+  // } else {
+  //   submit();
+  // }
 
 
 }
+
+
 
 
 /*
