@@ -13,7 +13,7 @@ $('#nameLabel').append('<span id="nameError">' + ' (please provide your name)' +
 $('#emailLabel').append('<span id="emailError">' + ' (please provide a valid email address)' + '</span>').css({'color': '#9f3b53', 'font-weight':'500'});
 
 $('.shirt legend').append('<br><span id="shirtError">' + ' Don\'t forget to pick a T-shirt' + '</span>');
-$('#shirtError').css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
+$('#shirtError').css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'}); //May be small error having font size in pixels and not in ems like in original css
 
 $('.activities legend').append('<br><span id="activityError">' + ' Please select an Activity' + '</span>');
 $('#activityError').css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
@@ -56,28 +56,29 @@ $('div#paypal-option').hide();
 $('div#bitcoin-option').hide();
 
 
-//Apply handler to dropdown menu to take actions when the values change
+//Apply handler to dropdown menu to call checkJobRoleValue() when the values change
 $('select#title').change(function(){
 
   checkJobRoleValue();
 
 });
 
-//Apply handler to....
+//Apply handler to T-shirt design menu to call checkDesignValue() when the values change
 $('select#design').change(function(){
 
   checkDesignValue();
 
 });
 
-//Apply handler to....
+//Apply handler to all checkboxes to call checkCheckBox() when the values change
+//***********************
 $('input:checkbox').change(function(){ //Event handler isn't correct because checkbox value is always the same
 
   checkCheckBox();
 
 });
 
-//Apply handler to....
+//Apply handler to payment dropdown to call checkPaymentOption() when the values change
 $('select#payment').change(function(){ //Event handler isn't correct because checkbox value is always the same
 
   checkPaymentOption();

@@ -64,6 +64,18 @@ legend {
 	margin-bottom: 1.125em;
 }
 
+select, input[type="color" i][list] {
+    background-color: rgb(255, 255, 255);
+    border-width: 1px;
+    border-top-width: 1px;
+    border-right-width: 1px;
+    border-bottom-width: 1px;
+    border-left-width: 1px;
+    border-style: solid;
+    border-color: rgb(166, 166, 166);
+    border-image: initial;
+}
+
 input[type="text"],
 input[type="email"],
 legend {
