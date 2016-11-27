@@ -342,7 +342,7 @@ function validateForm(){
 
   var email_address = $('input#mail');
   var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
-  if(!email_regex.test(email_address.val()) && email_address.val() != ""){ 
+  if(!email_regex.test(email_address.val())){ 
         
     //Call error message and styling
     $('#emailError').show().css({'color': '#9f3b53', 'font-weight':'500'});
