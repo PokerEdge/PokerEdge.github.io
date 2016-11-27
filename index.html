@@ -28,14 +28,16 @@
         <input type="email" id="mail" name="user_email">
         
         <label for="title">Job Role</label>
-        <select id="title" name="user_title">
-          <option value="full-stack js developer">Full Stack JavaScript Developer</option>
-          <option value="front-end developer">Front End Developer</option>
-          <option value="back-end developer">Back End Developer</option>
-          <option value="designer">Designer</option>          
-          <option value="student">Student</option>
-          <option value="other">Other</option>  
-        </select>
+        <div class="styled-select">
+          <select id="title" name="user_title">
+            <option value="full-stack js developer">Full Stack JavaScript Developer</option>
+            <option value="front-end developer">Front End Developer</option>
+            <option value="back-end developer">Back End Developer</option>
+            <option value="designer">Designer</option>          
+            <option value="student">Student</option>
+            <option value="other">Other</option>  
+          </select>
+        </div>
         <input type="text" id="other-title" placeholder="Your Title">           
       </fieldset>
       
@@ -44,34 +46,40 @@
         
         <div id="shirtInfo">
           <label for="size">Size:</label>
-          <select id="size" name="user_size">
-            <option value="small">S</option>
-            <option value="medium" selected>M</option>
-            <option value="large">L</option>
-            <option value="extra large">XL</option>
-          </select>
+          <div class="styled-select">
+            <select id="size" name="user_size">
+              <option value="small">S</option>
+              <option value="medium" selected>M</option>
+              <option value="large">L</option>
+              <option value="extra large">XL</option>
+            </select>
+          </div>
         </div>
 
         <div>
           <label for="design">Design:</label>
+          <div class="styled-select">
           <select id="design" name="user_design">
             <option>Select Theme</option>
             <option value="js puns">Theme - JS Puns</option>
             <option value="heart js">Theme - I &#9829; JS</option>
           </select>
+          </div>
         </div>
 
         <div id="colors-js-puns" class="">
           <label for="color">Color:</label>
-          <select id="color">
-            <option value="select-theme"><-- Please select T-shirt theme</option>
-            <option value="cornflowerblue">Cornflower Blue</option>
-            <option value="darkslategrey">Dark Slate Grey</option> 
-            <option value="gold">Gold</option> 
-            <option value="tomato">Tomato</option>
-            <option value="steelblue">Steel Blue</option> 
-            <option value="dimgrey">Dim Grey</option> 
-          </select>
+          <div class="styled-select">
+            <select id="color">
+              <option value="select-theme"><-- Please select T-shirt theme</option>
+              <option value="cornflowerblue">Cornflower Blue</option>
+              <option value="darkslategrey">Dark Slate Grey</option> 
+              <option value="gold">Gold</option> 
+              <option value="tomato">Tomato</option>
+              <option value="steelblue">Steel Blue</option> 
+              <option value="dimgrey">Dim Grey</option> 
+            </select>
+          </div>
         </div>                
       </fieldset>
 
@@ -90,12 +98,14 @@
         <legend>Payment Info</legend>
 
         <label for="payment">I'm going to pay with:</label>
-        <select id="payment" name="user_payment">
-          <option value="select_method">Select Payment Method</option>
-          <option value="credit card" selected>Credit Card</option>
-          <option value="paypal">PayPal</option>
-          <option value="bitcoin">Bitcoin</option>
-        </select>
+        <div class="styled-select">
+          <select id="payment" name="user_payment">
+            <option value="select_method">Select Payment Method</option>
+            <option value="credit card" selected>Credit Card</option>
+            <option value="paypal">PayPal</option>
+            <option value="bitcoin">Bitcoin</option>
+          </select>
+        </div>
 
         <div id="credit-card" class="credit-card">
 
@@ -114,29 +124,34 @@
             <input id="cvv" name="user_cvv" type="text"> 
           </div>
 
+          
           <label for="exp-month">Expiration Date:</label>
-          <select id="exp-month" name="user_exp-month">
-            <option value="1">1 - January</option>
-            <option value="2">2 - February</option>
-            <option value="3">3 - March</option>
-            <option value="4">4 - April</option>
-            <option value="5">5 - May</option>
-            <option value="6">6 - June</option>
-            <option value="7">7 - July</option>
-            <option value="8">8 - August</option>
-            <option value="9">9 - September</option>
-            <option value="10">10 - October</option>
-            <option value="11">11 - November</option>	
-            <option value="12">12 - December</option>          		          
-          </select>
-          <label for="exp-year">Expiration Year:</label>
-          <select id="exp-year" name="user_exp-year">
-            <option value="2016">2016</option>
-            <option value="2017">2017</option>
-            <option value="2018">2018</option>
-            <option value="2019">2019</option>
-            <option value="2020">2020</option>        		          
-          </select> 	                  	         
+          <div class="styled-select">  
+            <select id="exp-month" name="user_exp-month">
+              <option value="1">1 - January</option>
+              <option value="2">2 - February</option>
+              <option value="3">3 - March</option>
+              <option value="4">4 - April</option>
+              <option value="5">5 - May</option>
+              <option value="6">6 - June</option>
+              <option value="7">7 - July</option>
+              <option value="8">8 - August</option>
+              <option value="9">9 - September</option>
+              <option value="10">10 - October</option>
+              <option value="11">11 - November</option>	
+              <option value="12">12 - December</option>          		          
+            </select>
+          </div>
+          <div class="styled-select">
+            <label for="exp-year">Expiration Year:</label>
+            <select id="exp-year" name="user_exp-year">
+              <option value="2016">2016</option>
+              <option value="2017">2017</option>
+              <option value="2018">2018</option>
+              <option value="2019">2019</option>
+              <option value="2020">2020</option>        		          
+            </select> 
+          </div>	                  	         
         </div>
 
         <div id ="paypal-option">

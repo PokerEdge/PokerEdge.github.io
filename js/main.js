@@ -6,7 +6,7 @@ $('input#name').focus();
 
 //Add and hide a span element that will hold the text for the total cost the user will pay upon checking events and registering
 $('.activities').append('<span id="totalCost"></span>');
-$('.activities span').hide();
+$('#totalCost').hide();
 
 //Error messages and styling edits to be dynamically inserted
 $('#nameLabel').append('<span id="nameError">' + ' (please provide your name)' + '</span>').css({'color': '#9f3b53', 'font-weight':'500'});
@@ -142,7 +142,6 @@ $('select#color').children().show();
 //  maintains a total of the amount of money to be charged to the user given user input on any (set of) checkbox element(s) and displays the total
 function checkCheckBox(){
 
-
   $('.activities span').hide();
 
   var totalCost = 0;
@@ -232,10 +231,10 @@ function checkCheckBox(){
   }
 
   //Displays the non-zero total amount to be charged to user based on user checkbox input
-  if (totalCost !== 0){
-    $('.activities span').show();
+  if (totalCost != 0){
+    $('#totalCost').show();
     
-    $('.activities span').text(function(){
+    $('#totalCost').text(function(){
       return 'Total: $' + totalCost;
     });
 
@@ -277,6 +276,7 @@ function checkPaymentOption(){
 function validateForm(){
 
 //MAKE USE OF LOCAL COUNTER THAT IF === 0 THEN FORM SUBMITS, ELSE PREVENTDEFAULT();
+  //USE ANONYMOUS FUNCTIONS WITH e.preventDefault() in order to validate each piece
 //CHECK THAT ERROR AND SPAN IDs MATCH
 //RESET ALL STYLES AND MESSAGES TO NORMAL
 
@@ -347,7 +347,7 @@ function validateForm(){
     //Call error message and styling
     $('#emailError').show().css({'color': '#9f3b53', 'font-weight':'500'});
     errorCount++;
-    // e.preventDefault();
+    // preventDefault();
     // return false;  
   }  
 

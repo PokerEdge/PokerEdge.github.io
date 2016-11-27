@@ -64,7 +64,7 @@ legend {
 	margin-bottom: 1.125em;
 }
 
-select, input[type="color" i][list] {
+/*select, input[type="color" i][list] {
     background-color: rgb(255, 255, 255);
     border-width: 1px;
     border-top-width: 1px;
@@ -74,6 +74,23 @@ select, input[type="color" i][list] {
     border-style: solid;
     border-color: rgb(166, 166, 166);
     border-image: initial;
+}*/
+
+.styled-select select {
+   background: #fff;
+/*   width: 268px;
+   padding: 5px;
+   font-size: 16px;
+   line-height: 1;
+   border: 0;
+   border-radius: 0;
+   height: 34px;
+   -webkit-appearance: none;*/
+}
+
+.styled-select {
+
+	
 }
 
 input[type="text"],
