@@ -353,7 +353,7 @@ function validateForm(){
 
 
   //Check that t-shirt has been chosen else display below error message
-  if ($('#color:selected').length === 0){
+  if (!$('#color option:selected').length){
 
     $('#shirtError').show().css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
 
