@@ -1,4 +1,6 @@
 //REMOVE CSS FROM MESSAGES BELOW BECAUSE THEY NEED TO BE RE-ADDED FOR WHEN THE ERROR MESSSAGE IS SHOWN
+//CREATE .errorStyle CLASS
+//CREATE .defaultStyle CLASS (not .errorStyle)
 
 
 //Give focus to input#name text input on page load
@@ -86,8 +88,8 @@ $('select#payment').change(function(){ //Event handler isn't correct because che
 });
 
 //Apply handler to....
-$('button[type="submit"]').click(function(){ //Event handler isn't correct because checkbox value is always the same
-
+$('button[type="submit"]').click(function(e){ //Event handler isn't correct because checkbox value is always the same
+  e.preventDefault();
   validateForm();
 
 });
@@ -273,12 +275,9 @@ function checkPaymentOption(){
 
 }
 
+//Function checks all form elements for valid input, displays appropriate error messages and styles, if any,
+  //and submits form if all form elements are valid.
 function validateForm(){
-
-//MAKE USE OF LOCAL COUNTER THAT IF === 0 THEN FORM SUBMITS, ELSE PREVENTDEFAULT();
-  //USE ANONYMOUS FUNCTIONS WITH e.preventDefault() in order to validate each piece
-//CHECK THAT ERROR AND SPAN IDs MATCH
-//RESET ALL STYLES AND MESSAGES TO NORMAL
 
   //Hide error messages and stylings on page load
     //Hide "please provide your name" error massesage and reset message style
@@ -334,55 +333,49 @@ function validateForm(){
 
   var nameInput = $('input#name');   
   if(nameInput.val() === ""){
+    
     $('#nameError').show().css({'color': '#9f3b53', 'font-weight':'500'});
     errorCount++;
-    // preventDefault();
   }
 
 
   var email_address = $('input#mail');
   var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+
+  //Check that email address is valid and display error message and styling if not valid
   if(!email_regex.test(email_address.val())){ 
         
-    //Call error message and styling
     $('#emailError').show().css({'color': '#9f3b53', 'font-weight':'500'});
     errorCount++;
-    // preventDefault();
-    // return false;  
   }  
 
 
-  //Check that t-shirt has been chosen else display below error message
+  //Check that a t-shirt color has been chosen else display below error styles and message
   if (!$('#color option:selected').length){
 
     $('#shirtError').show().css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
-
   }
 
   //Check if an activity is checked, and if not, display error message and style
-  if ($("input:checkbox:checked").length === 0){
+  if (!$("input:checkbox:checked").length){
     
     $('#activityError').show();
     errorCount++;
-
   }
 
-  //Payment option must be selected (CC is selected by defualt, but can check if payment option val === "Select Payment Method")
-//*************************************************
-  
-
-var ccNumber = $('#cc-number');
-
-//Using creditCardValidator plugin to check for a valid credit card number based on 3 criteria, if invalid, display error styling
-if(!ccNumber.validateCreditCard().length_valid && !ccNumber.validateCreditCard().luhn_valid && !ccNumber.validateCreditCard().valid){
-
-  $('#ccTitle').css({'color': '#9f3b53', 'font-weight':'500'});
-  errorCount++;
+  //Payment option must be selected (CC is selected by defualt, but can check if payment 
+    //option val === "Select Payment Method")
+    //*************************************************
     
-}
 
+  var ccNumber = $('#cc-number');
 
+  //Using creditCardValidator plugin to check for a valid credit card number based on 3 criteria, if invalid, display error styling
+  if(!ccNumber.validateCreditCard().length_valid && !ccNumber.validateCreditCard().luhn_valid && !ccNumber.validateCreditCard().valid){
 
+    $('#ccTitle').css({'color': '#9f3b53', 'font-weight':'500'});
+    errorCount++;
+  }
   
   var zip = $('input#zip');
   var zip_regex = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
@@ -392,7 +385,6 @@ if(!ccNumber.validateCreditCard().length_valid && !ccNumber.validateCreditCard()
     
     $('#zipTitle').css({'color': '#9f3b53', 'font-weight':'500'});
     errorCount++;
-
   }
 
   var cvv = $("input#cvv");
@@ -403,17 +395,13 @@ if(!ccNumber.validateCreditCard().length_valid && !ccNumber.validateCreditCard()
         
     $('#cvvTitle').css({'color': '#9f3b53', 'font-weight':'500'});
     errorCount++;
-
-    // e.preventDefault();
-    // return false;  
   }
 
   
-  // if (errorCount != 0){
-  //   preventDefault();
-  // } else {
-  //   submit();
-  // }
+  if (errorCount === 0){
+    $('button[type="submit"]').submit();
+    console.log("form submitted");
+  }
 
 
 }

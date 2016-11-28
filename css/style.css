@@ -90,7 +90,7 @@ legend {
 
 .styled-select {
 
-	
+
 }
 
 input[type="text"],
@@ -181,6 +181,20 @@ button:hover {
   display: table;
   clear: both;
 }
+
+
+/*Styles added for error handling*/
+
+.defaultStyle {
+  color: #000;
+  font-weight:normal;
+}
+
+.errorStyle {
+  color: #9f3b53;
+  font-weight: 500;
+}
+
 
 /* ================================= 
   Media Queries
