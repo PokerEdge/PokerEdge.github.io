@@ -6,6 +6,9 @@
 //Give focus to input#name text input on page load
 $('input#name').focus();
 
+//Hide Color part of T-shirt Info area until 'Design' drop down is selected
+$('#colors-js-puns').hide();
+
 //Add and hide a span element that will hold the text for the total cost the user will pay upon checking events and registering
 $('.activities').append('<span id="totalCost"></span>');
 $('#totalCost').hide();
@@ -87,11 +90,11 @@ $('select#payment').change(function(){ //Event handler isn't correct because che
 
 });
 
-//Apply handler to....
+//Apply click handler on submit button to fire function on click to prevent invalid data form submissions
 $('button[type="submit"]').click(function(e){ //Event handler isn't correct because checkbox value is always the same
+  
   e.preventDefault();
   validateForm();
-
 });
 
 
@@ -106,13 +109,17 @@ function checkJobRoleValue(){
   } else{
 
     $('#other-title').hide();
-
   }
 }
 
-//Function checks...
+//Function causes values of the 'Color' drop down menu correspond to the selected labeled 'Design' drop down menu selection
+  //Color drop down menu is hidden until an option is selected from 'Design' menu
 function checkDesignValue(){
 
+//Shows color selection label and drop down menu if a design drop down element is selected
+if('select#design:selected'){
+  $('#colors-js-puns').show();
+}
 
 $('select#color').children().show();
 
@@ -311,25 +318,8 @@ function validateForm(){
   $('div#paypal-option').hide();
   $('div#bitcoin-option').hide();
 
-  
+  //Error counter used to keep track of all invalid form elements within this function
   var errorCount = 0;
-
-  //   Form validation: display error messages and don't let the user submit the form (submit() or reset() register button depending on conditions) if 
-  //   any of these validation errors exist:
-  //     Name field can't be empty
-  //     Email field must be a validly formatted e-mail address (you don't have to check that it's a real e-mail address, just that it's formatted 
-  //      like one: dave@teamtreehouse.com for example. You'll need to use a regular expression to get this requirement. See the list of Resources for links to learn about regular expressions.
-  //     At least one activity must be checked from the list under "Register for Actitivities."
-  //     Payment option must be selected.
-  //     If "Credit card" is the selected payment option, make sure the user supplied a credit card number, a zip 
-  //     code, and a 3 number CVV value.
-
-  //Set conditions for form submit() - All form elements validated
-    //errorCounter === 0 
-
-
-  //Check if name input text field is empty
-    //If name input text is not empty, then it is valid
 
   var nameInput = $('input#name');   
   if(nameInput.val() === ""){
