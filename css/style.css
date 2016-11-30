@@ -66,17 +66,17 @@ legend {
 
 /* Styles for editing the drop down menus */
 .styled-select{
-   background-color: #fff;
+   background-color: #c1deeb;
    padding: 5px;
    font-size: 16px;
    line-height: 1;
-   border: 0;
+   border: 0; /*edit here for cornered borders*/
    border-radius: 0;
    height: 30px;
  }
 
- .styled-select:selected {
- 	background-color: #accbd9;
+ .styled-select:focus {
+ 	background-color: #fff;
  }
 /* End styles for editing the drop down menus */ 
 
