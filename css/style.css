@@ -64,103 +64,21 @@ legend {
 	margin-bottom: 1.125em;
 }
 
-/*Styles for editing the drop down menus and checkboxes*/
-
-/*select, input[type="color" i][list] {
-    background-color: rgb(255, 255, 255);
-    border-width: 1px;
-    border-top-width: 1px;
-    border-right-width: 1px;
-    border-bottom-width: 1px;
-    border-left-width: 1px;
-    border-style: solid;
-    border-color: rgb(166, 166, 166);
-    border-image: initial;
-}
-
-.styled-select select {
-   background: transparent;
-   width: 268px;
+/* Styles for editing the drop down menus */
+.styled-select{
+   background-color: #fff;
    padding: 5px;
    font-size: 16px;
    line-height: 1;
    border: 0;
    border-radius: 0;
-   height: 34px;
-   -webkit-appearance: none;
-}*/
+   height: 30px;
+ }
 
-/* 
-
-	Use non-repetitive code with the proper selector, basically everything but width for each element
-
-*/
-/*
-
-.styled-select #title {
-   border-radius: 5px;	
-   width: 280px;
-   height: 28px;
-   overflow: hidden;
-   background: url(../img/dropdown-image.png) no-repeat right #ddd;
-   border: 1px solid #ccc;
-}
-
-.styled-select #size {
-   border-radius: 5px;	
-   width: 50px;
-   height: 28px;
-   overflow: hidden;
-   background: url(../img/dropdown-image.png) no-repeat right #ddd;
-   border: 1px solid #ccc;
-}
-
-.styled-select #design {
-   border-radius: 5px;	
-   width: 164px;
-   height: 28px;
-   overflow: hidden;
-   background: url(../img/dropdown-image.png) no-repeat right #ddd;
-   border: 1px solid #ccc;
-}
-
-.styled-select #color {
-   border-radius: 5px;	
-   width: 280px;
-   height: 28px;
-   overflow: hidden;
-   background: url(../img/dropdown-image.png) no-repeat right #ddd;
-   border: 1px solid #ccc;
-}
-
-.styled-select #payment {
-   border-radius: 5px;	
-   width: 220px;
-   height: 28px;
-   overflow: hidden;
-   background: url(../img/dropdown-image.png) no-repeat right #ddd;
-   border: 1px solid #ccc;
-}
-
-.styled-select #exp-month {
-   border-radius: 5px;	
-   width: 140px;
-   height: 28px;
-   overflow: hidden;
-   background: url(../img/dropdown-image.png) no-repeat right #ddd;
-   border: 1px solid #ccc;
-}
-
-.styled-select #exp-year {
-   border-radius: 5px;	
-   width: 80px;
-   height: 28px;
-   overflow: hidden;
-   background: url(../img/dropdown-image.png) no-repeat right #ddd;
-   border: 1px solid #ccc;
-}
-*/
-/*End styles for editing the drop down menus and checkboxes*/
+ .styled-select:selected {
+ 	background-color: #accbd9;
+ }
+/* End styles for editing the drop down menus */ 
 
 input[type="text"],
 input[type="email"],
@@ -198,29 +116,6 @@ input[type="checkbox"],
 input[type="radio"] {
 	display: inline-block;
 }
-
-/*/*//**Added checkbox styling*/
-
-/*input[type="checkbox"] {
-    display:none;
-}
-
-.checkbox input[type="checkbox"] + label span {
-    font-weight: normal;
-    display:inline-block;
-    width:19px;
-    height:19px;
-    margin:-1px 4px 0 0;
-    vertical-align:middle;
-    background:url(check_radio_sheet.png) no-repeat; /*May need to reference the unchcecked box image, too*/
-/*    cursor:pointer;
-}
-.checkbox input[type="checkbox"]:checked + label span {
-  	font-weight: normal;
-    background:url(../img/checkbox-image.png) no-repeat;
-}*/
-
-/*End of added checkbox styling/*/
 
 button {
 	color: #fff;
@@ -283,9 +178,10 @@ button:hover {
 }
 
 .errorStyle {
-  color: #9f3b53;
+  color: #9f3b53; /*A dark red color that indicates an invalid form value*/
   font-weight: 500;
 }
+/*End styles added for error handling*/
 
 
 /* ================================= 
