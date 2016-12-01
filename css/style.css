@@ -70,13 +70,14 @@ legend {
    padding: 5px;
    font-size: 16px;
    line-height: 1;
-   border: 0; /*edit here for cornered borders*/
+   border: 0;
    border-radius: 0;
    height: 30px;
  }
 
  .styled-select:focus {
  	background-color: #fff;
+ 	border: 2px #184f68;
  }
 /* End styles for editing the drop down menus */ 
 
@@ -172,12 +173,12 @@ button:hover {
 
 /*Styles added for error handling*/
 
-.defaultStyle {
+.errorRemove {
   color: #000;
-  font-weight:normal;
+  font-weight: normal;
 }
 
-.errorStyle {
+.errorShow {
   color: #9f3b53; /*A dark red color that indicates an invalid form value*/
   font-weight: 500;
 }
