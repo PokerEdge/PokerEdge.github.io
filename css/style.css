@@ -171,20 +171,6 @@ button:hover {
 }
 
 
-/*Styles added for error handling*/
-
-.errorRemove {
-  color: #000;
-  font-weight: normal;
-}
-
-.errorShow {
-  color: #9f3b53; /*A dark red color that indicates an invalid form value*/
-  font-weight: 500;
-}
-/*End styles added for error handling*/
-
-
 /* ================================= 
   Media Queries
 ==================================== */
