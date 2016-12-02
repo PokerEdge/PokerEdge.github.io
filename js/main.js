@@ -119,6 +119,7 @@ function checkDesignValue(){
 //Shows color selection label and drop down menu if a design drop down element is selected
 if('select#design:selected'){
   $('#colors-js-puns').show();
+  $('#select-theme').show();
 }
 
 $('select#color').children().show();
@@ -130,6 +131,7 @@ $('select#color').children().show();
 
     // $('select#color').children(":nth-child(n+1)").hide(); //Hide first child
     $('select#color').children(":nth-child(n+5)").hide();
+    $('#select-theme').hide();
 
 
   } else if ($('select#design').val() === 'heart js') {
@@ -137,6 +139,7 @@ $('select#color').children().show();
     //Else if design value is "heart js", color menu should display options "Tomato", "Steel Blue" and "Dim Grey" (bottom 3 elements in list)
     // $('select#color').children(":nth-child(n+1)").hide(); //Hide first child
     $('select#color').children(":nth-child(-n+4)").hide();
+    $('#select-theme').hide();
 
   } else {
 
