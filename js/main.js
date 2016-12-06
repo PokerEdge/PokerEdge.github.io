@@ -47,9 +47,6 @@ $('#cvvTitle').css({'color': '#000', 'font-weight':'normal'});
 //Initially hide the text input that should only show if user selects "Other" from the "Job Role" dropdown menu
 $('#other-title').hide();
 
-//Hides all color selections until a Design element is chosen from the Design drop down menu
-// $('select#color').children(":nth-child(n+1)").hide();
-
 //Hide all payment option information on page load that is to be displayed after user chooses an option from the Payment Info dropdown menu
 $('div#credit-card').show();
 $('div#paypal-option').hide();
@@ -60,35 +57,30 @@ $('div#bitcoin-option').hide();
 $('select#title').change(function(){
 
   checkJobRoleValue();
-
 });
 
 //Apply handler to T-shirt design menu to call checkDesignValue() when the values change
 $('select#design').change(function(){
 
   checkDesignValue();
-
 });
 
 //Apply handler to all checkboxes to call checkCheckBox() when the values change
 $('input:checkbox').change(function(){
 
   checkCheckBox();
-
 });
 
 //Apply handler to payment dropdown to call checkPaymentOption() when the values change
 $('select#payment').change(function(){
 
   checkPaymentOption();
-
 });
 
 //Apply click handler on submit button to fire function on click to prevent invalid data form submissions
-$('button[type="submit"]').click(function(e){
+$('button[type="submit"]').click(function(){
   
-  e.preventDefault();
-  validateForm();
+    validateForm();
 });
 
 
@@ -110,31 +102,40 @@ function checkJobRoleValue(){
   //Color drop down menu is hidden until an option is selected from 'Design' menu
 function checkDesignValue(){
 
-//Shows color selection label and drop down menu if a design drop down element is selected
-if($('select#design').val() !== 'select-design'){
-  $('#colors-js-puns').show();
-  $('select#color').children().show();
+  //Shows color selection label and drop down menu if a design drop down element is selected
+  if($('select#design').val() === 'select-design'){
+    
+    $('#colors-js-puns').hide();
+    $('select#color').children().hide();
+  } else {
 
-    if($('select#design').val() === 'js puns'){
+    $('#colors-js-puns').show();
+    $('select#color').children().show();
+  }
+  
+  if($('select#design').val() === 'js puns'){
 
-      //If design value is "js puns", color menu should display options "Cornflower Blue", "Dark Slate Grey" and "Gold" (top 3 elements in list)
-      $('select#color').children(":nth-child(n+5)").hide();
-      $('#select-theme').hide();
+    //If design value is "js puns", color menu should display options "Cornflower Blue", "Dark Slate Grey" and "Gold" (top 3 elements in list)
+    $("#color").val("select-theme");
 
-    } else if ($('select#design').val() === 'heart js') {
+    $('select#color').children().show();
+    $('select#color').children(":nth-child(n+5)").hide();
+    $('#select-theme').hide();
 
-      //Else if design value is "heart js", color menu should display options "Tomato", "Steel Blue" and "Dim Grey" (bottom 3 elements in list)
-      $('select#color').children(':nth-child(-n+4)').hide();
-      
-      if ($('select#color').val() !== 'select-theme'){
-          $('#select-theme').hide();
-      }
-    } 
-    else {
+    //If val is a 'heart js' val then set shown value to 'select theme' instead
+
+  } else if ($('select#design').val() === 'heart js') {
+
+    //Else if design value is "heart js", color menu should display options "Tomato", "Steel Blue" and "Dim Grey" (bottom 3 elements in list)
+    $("#color").val("select-theme");
+
+    $('select#color').children().show();
+    $('select#color').children(':nth-child(-n+4)').hide();
+    $('#select-theme').hide();
+  } else {
 
       //Else if design value is not one of the choices, hide options except "<-- Please select T-shirt theme"
       $('select#color').children(':nth-child(n+1)').hide(); 
-    }
   }
 }
 
@@ -337,39 +338,42 @@ function validateForm(){
     errorCount++;
   }  
 
-  var ccNumber = $('#cc-number');
-
-  //Using creditCardValidator plugin to check for a valid credit card number based on 3 criteria, if invalid, display error styling
-  if(!ccNumber.validateCreditCard().length_valid && !ccNumber.validateCreditCard().luhn_valid && !ccNumber.validateCreditCard().valid){
-
-    $('#ccTitle').css({'color': '#9f3b53', 'font-weight':'500'});
-    errorCount++;
-  }
-  
-  var zip = $('input#zip');
-  var zip_regex = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
-  
-  //Check that zip code is valid, if not, apply error style
-  if(!zip_regex.test(zip.val()) && !zip.val() != ""){
+if($('select#payment').val() === 'credit card'){
     
-    $('#zipTitle').css({'color': '#9f3b53', 'font-weight':'500'});
-    errorCount++;
-  }
+    var ccNumber = $('#cc-number');
 
-  var cvv = $("input#cvv");
-  var cvv_regex = /^\d{3,4}$/;
+    //Using creditCardValidator plugin to check for a valid credit card number based on 3 criteria, if invalid, display error styling
+    if(!ccNumber.validateCreditCard().length_valid && !ccNumber.validateCreditCard().luhn_valid && !ccNumber.validateCreditCard().valid){
 
-  //Check that CVV is valid and if not apply error styling
-  if(!cvv_regex.test(cvv.val()) && !cvv.val() != ""){ 
-        
-    $('#cvvTitle').css({'color': '#9f3b53', 'font-weight':'500'});
-    errorCount++;
-  }
+      $('#ccTitle').css({'color': '#9f3b53', 'font-weight':'500'});
+      errorCount++;
+    }
+    
+    var zip = $('input#zip');
+    var zip_regex = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+    
+    //Check that zip code is valid, if not, apply error style
+    if(!zip_regex.test(zip.val()) && !zip.val() != ""){
+      
+      $('#zipTitle').css({'color': '#9f3b53', 'font-weight':'500'});
+      errorCount++;
+    }
 
-  
-  if (errorCount === 0){
+    var cvv = $("input#cvv");
+    var cvv_regex = /^\d{3,4}$/;
 
-    $('button[type="submit"]').submit();
-    console.log("form submitted");
-  }
+    //Check that CVV is valid and if not apply error styling
+    if(!cvv_regex.test(cvv.val()) && !cvv.val() != ""){ 
+          
+      $('#cvvTitle').css({'color': '#9f3b53', 'font-weight':'500'});
+      errorCount++;
+    }
+  }  
+  //PREVENT DEFAULT NEEDS PROPER POSITIONING
+  // if (errorCount === 0){
+
+  //   $('button[type="submit"]').submit();
+  // } else{
+  //   $('button[type="submit"]').preventDefault();
+  // }
 }
