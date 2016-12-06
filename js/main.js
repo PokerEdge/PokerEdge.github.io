@@ -78,8 +78,9 @@ $('select#payment').change(function(){
 });
 
 //Apply click handler on submit button to fire function on click to prevent invalid data form submissions
-$('button[type="submit"]').click(function(){
-  
+$('button[type="submit"]').click(function(e){
+    
+    e.preventDefault();
     validateForm();
 });
 
@@ -338,7 +339,7 @@ function validateForm(){
     errorCount++;
   }  
 
-if($('select#payment').val() === 'credit card'){
+  if($('select#payment').val() === 'credit card'){
     
     var ccNumber = $('#cc-number');
 
@@ -369,11 +370,10 @@ if($('select#payment').val() === 'credit card'){
       errorCount++;
     }
   }  
-  //PREVENT DEFAULT NEEDS PROPER POSITIONING
-  // if (errorCount === 0){
 
-  //   $('button[type="submit"]').submit();
-  // } else{
-  //   $('button[type="submit"]').preventDefault();
-  // }
+  //submit the input forms if all relevant conditions for form validation are valid
+  if (errorCount === 0){
+
+    $('button[type="submit"]').submit();
+  }
 }
