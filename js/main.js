@@ -53,40 +53,91 @@ $('div#paypal-option').hide();
 $('div#bitcoin-option').hide();
 
 
-//Apply handler to dropdown menu to call checkJobRoleValue() when the values change
-$('select#title').change(function(){
 
+//CALL BELOW FUNCTIONS WITHIN THE VALIDATION FUNCTION - MAKE FUNCTIONS FOR OTHER VALIDATION AREAS
+
+
+//Apply handler to name input text field to call checkNameValue() when the values change
+$('input#name').change(function validateNameValue(e){
+
+  e.preventDefault();
+  checkNameValue();
+});
+
+//Apply handler to email input text field to call checkEmailValue() when the values change
+$('input#mail').change(function validateEmailValue(e){
+
+  e.preventDefault();
+  checkEmailValue();
+});
+
+
+//Apply handler to dropdown menu to call checkJobRoleValue() when the values change
+$('select#title').change(function validateJobRoleValue(e){
+
+  e.preventDefault();
   checkJobRoleValue();
 });
 
 //Apply handler to T-shirt design menu to call checkDesignValue() when the values change
-$('select#design').change(function(){
+$('select#design').change(function validateDesignValue(e){
 
+  e.preventDefault();
   checkDesignValue();
 });
 
 //Apply handler to all checkboxes to call checkCheckBox() when the values change
-$('input:checkbox').change(function(){
+$('input:checkbox').change(function validateCheckBoxValue(e){
 
+  e.preventDefault();
   checkCheckBox();
 });
 
 //Apply handler to payment dropdown to call checkPaymentOption() when the values change
-$('select#payment').change(function(){
+$('select#payment').change(function validatePaymentOption(e){
 
+  e.preventDefault();
   checkPaymentOption();
 });
 
 //Apply click handler on submit button to fire function on click to prevent invalid data form submissions
 $('button[type="submit"]').click(function(e){
     
-    e.preventDefault();
     validateForm();
 });
 
 
+//Function checks for a valid name entry by the user, then shows or hides a text field based on the validation
+function checkNameValue(){
 
-//Function checks to see which 'Job Role' value is selected, then shows or hides a text field based on the selected value
+  //Check name value logic is valid or prevent default
+  var nameInput = $('input#name');   
+  if(nameInput.val() === ""){
+    
+    $('#nameLabel').css({'color': '#9f3b53', 'font-weight':'500'});
+    $('#nameError').show().css({'color': '#9f3b53', 'font-weight':'500'});
+  }
+}
+
+//Function checks for a valid email entry by the user, then shows or hides a text field based on the validation
+function checkEmailValue(){
+
+  //Check email value logic is valid or preventDefault
+  var email_address = $('input#mail');
+  var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
+
+  //Check that email address is valid and display error message and styling if not valid
+  if(!email_regex.test(email_address.val())){ 
+        
+    $('#emailLabel').css({'color': '#9f3b53', 'font-weight':'500'});
+    $('#emailError').show().css({'color': '#9f3b53', 'font-weight':'500'});
+    // errorCount++;
+  }
+
+}
+
+
+//Function checks for the selected 'Job Role' value, if one is selected, then shows or hides a text field based on the selected value
 function checkJobRoleValue(){
 
   if($('select#title').val() === 'other'){
@@ -303,28 +354,12 @@ function validateForm(){
   //Initially hide the text input that should only show if user selects "Other" from the "Job Role" dropdown menu
   $('#other-title').hide();
 
-  //Error counter used to count invalid form elements
-  var errorCount = 0;
+  //VALIDATE NAME FUNCTION CALL ON CHANGE *******************
+  $('input#name').change(checkNameValue);
 
-  var nameInput = $('input#name');   
-  if(nameInput.val() === ""){
-    
-    $('#nameLabel').css({'color': '#9f3b53', 'font-weight':'500'});
-    $('#nameError').show().css({'color': '#9f3b53', 'font-weight':'500'});
-    errorCount++;
-  }
+  //VALIDATE EMAIL FUNCTION CALL ON CHANGE *******************
+  $('input#mail').change(checkEmailValue);
 
-
-  var email_address = $('input#mail');
-  var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
-
-  //Check that email address is valid and display error message and styling if not valid
-  if(!email_regex.test(email_address.val())){ 
-        
-    $('#emailLabel').css({'color': '#9f3b53', 'font-weight':'500'});
-    $('#emailError').show().css({'color': '#9f3b53', 'font-weight':'500'});
-    errorCount++;
-  }
 
   //Check that a t-shirt color has been chosen else display below error styles and message
   if ($('select#color').val() === 'select-theme'){
@@ -336,20 +371,21 @@ function validateForm(){
   if (!$("input:checkbox:checked").length){
     
     $('#activityError').show();
-    errorCount++;
   }  
 
+  //Check if credit card is the selected payment method
   if($('select#payment').val() === 'credit card'){
     
+    //Validate credit card number
     var ccNumber = $('#cc-number');
 
     //Using creditCardValidator plugin to check for a valid credit card number based on 3 criteria, if invalid, display error styling
     if(!ccNumber.validateCreditCard().length_valid && !ccNumber.validateCreditCard().luhn_valid && !ccNumber.validateCreditCard().valid){
 
       $('#ccTitle').css({'color': '#9f3b53', 'font-weight':'500'});
-      errorCount++;
     }
     
+    //Validate zip code
     var zip = $('input#zip');
     var zip_regex = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
     
@@ -357,9 +393,9 @@ function validateForm(){
     if(!zip_regex.test(zip.val()) && !zip.val() != ""){
       
       $('#zipTitle').css({'color': '#9f3b53', 'font-weight':'500'});
-      errorCount++;
     }
 
+    //Validate cvv
     var cvv = $("input#cvv");
     var cvv_regex = /^\d{3,4}$/;
 
@@ -367,13 +403,6 @@ function validateForm(){
     if(!cvv_regex.test(cvv.val()) && !cvv.val() != ""){ 
           
       $('#cvvTitle').css({'color': '#9f3b53', 'font-weight':'500'});
-      errorCount++;
     }
   }  
-
-  //submit the input forms if all relevant conditions for form validation are valid
-  if (errorCount === 0){
-
-    $('button[type="submit"]').submit();
-  }
 }
