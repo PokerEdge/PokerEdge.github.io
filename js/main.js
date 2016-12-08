@@ -18,6 +18,11 @@ $('#shirtError').css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px
 $('.activities legend').append('<br><span id="activityError">' + ' Please select an Activity' + '</span>');
 $('#activityError').css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
 
+// //Add span to show if payment method selected is "select_method" on submit
+$('.paymentChoice legend').append('<br><span id="paymentError">' + ' Please select a payment option' + '</span>');
+$('#paymentError').css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
+
+
 $('#ccTitle').css({'color': '#9f3b53', 'font-weight':'500'});
 $('#zipTitle').css({'color': '#9f3b53', 'font-weight':'500'});
 $('#cvvTitle').css({'color': '#9f3b53', 'font-weight':'500'});
@@ -38,6 +43,9 @@ $('.shirt span').hide();
   //Hide 'Please select an Activity' error message
 $('#activityError').hide();
 
+  //Hide 'Please select a payment option' error message
+$('#paymentError').hide();
+
   //Hide (reset) credit card error styles
 $('#ccTitle').css({'color': '#000', 'font-weight':'normal'});
 $('#zipTitle').css({'color': '#000', 'font-weight':'normal'});
@@ -53,57 +61,72 @@ $('div#paypal-option').hide();
 $('div#bitcoin-option').hide();
 
 
-
-//CALL BELOW FUNCTIONS WITHIN THE VALIDATION FUNCTION - MAKE FUNCTIONS FOR OTHER VALIDATION AREAS
-
-
-//Apply handler to name input text field to call checkNameValue() when the values change
-$('input#name').change(function validateNameValue(e){
-
-  e.preventDefault();
-  checkNameValue();
-});
-
-//Apply handler to email input text field to call checkEmailValue() when the values change
-$('input#mail').change(function validateEmailValue(e){
-
-  e.preventDefault();
-  checkEmailValue();
-});
-
-
 //Apply handler to dropdown menu to call checkJobRoleValue() when the values change
 $('select#title').change(function validateJobRoleValue(e){
 
-  e.preventDefault();
   checkJobRoleValue();
 });
 
 //Apply handler to T-shirt design menu to call checkDesignValue() when the values change
 $('select#design').change(function validateDesignValue(e){
 
-  e.preventDefault();
   checkDesignValue();
 });
 
 //Apply handler to all checkboxes to call checkCheckBox() when the values change
 $('input:checkbox').change(function validateCheckBoxValue(e){
 
-  e.preventDefault();
   checkCheckBox();
 });
 
 //Apply handler to payment dropdown to call checkPaymentOption() when the values change
 $('select#payment').change(function validatePaymentOption(e){
 
-  e.preventDefault();
   checkPaymentOption();
 });
 
 //Apply click handler on submit button to fire function on click to prevent invalid data form submissions
-$('button[type="submit"]').click(function(e){
+$('button[type="submit"]').click(function validateForm(e){
     
-    validateForm();
+    setErrorStyles();
+    //Validate name form on button click, adding error styling and preventing submit if invalid
+    if (!checkNameValue()){ e.preventDefault(); }
+
+    //Validate email form on button click, adding error styling and preventing submit if invalid
+    if (!checkEmailValue()){ e.preventDefault(); };
+
+    //Validate t-shirt design drop down on button click, adding error styling and preventing submit if invalid
+    if (!checkDesignValue()) { 
+      e.preventDefault();
+
+      //Check that a t-shirt color has been chosen else display below error styles and message
+      if ($('select#color').val() === 'select-theme'){
+
+      $('#shirtError').show().css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
+      }
+    }
+
+    if (!checkCheckBox()){ 
+
+      e.preventDefault();
+        
+      //Check if an activity is checked, and if not, display error message and style
+      if (!$("input:checkbox:checked").length){
+    
+        $('#activityError').show();
+      }
+    }
+
+    //Validate credit card number on button click, adding error styling and preventing submit if invalid
+    if (!checkCreditCardNumber()){ e.preventDefault(); }
+
+    //Validate zip code on button click, adding error styling and preventing submit if invalid
+    if (!checkZipCode()){ e.preventDefault(); }
+
+    //Validate CVV on button click, adding error styling and preventing submit if invalid
+    if (!checkCVV()){ e.preventDefault(); }
+
+
 });
 
 
@@ -122,7 +145,11 @@ function checkNameValue(){
 //Function checks for a valid email entry by the user, then shows or hides a text field based on the validation
 function checkEmailValue(){
 
-  //Check email value logic is valid or preventDefault
+  //Hide "please provide a valid email address" error message and reset message style
+  $('#emailError').hide();
+  $('#emailLabel').css({'color': '#000', 'font-weight':'normal'});
+
+  //Check email value logic is valid
   var email_address = $('input#mail');
   var email_regex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/i;
 
@@ -131,7 +158,6 @@ function checkEmailValue(){
         
     $('#emailLabel').css({'color': '#9f3b53', 'font-weight':'500'});
     $('#emailError').show().css({'color': '#9f3b53', 'font-weight':'500'});
-    // errorCount++;
   }
 
 }
@@ -157,6 +183,7 @@ function checkDesignValue(){
   //Shows color selection label and drop down menu if a design drop down element is selected
   if($('select#design').val() === 'select-design'){
     
+    $("#color").val("select-theme");
     $('#colors-js-puns').hide();
     $('select#color').children().hide();
   } else {
@@ -168,18 +195,16 @@ function checkDesignValue(){
   if($('select#design').val() === 'js puns'){
 
     //If design value is "js puns", color menu should display options "Cornflower Blue", "Dark Slate Grey" and "Gold" (top 3 elements in list)
-    $("#color").val("select-theme");
+    $("#color").val("cornflowerblue");
 
     $('select#color').children().show();
     $('select#color').children(":nth-child(n+5)").hide();
     $('#select-theme').hide();
 
-    //If val is a 'heart js' val then set shown value to 'select theme' instead
-
   } else if ($('select#design').val() === 'heart js') {
 
     //Else if design value is "heart js", color menu should display options "Tomato", "Steel Blue" and "Dim Grey" (bottom 3 elements in list)
-    $("#color").val("select-theme");
+    $("#color").val("tomato");
 
     $('select#color').children().show();
     $('select#color').children(':nth-child(-n+4)').hide();
@@ -202,11 +227,9 @@ function checkCheckBox(){
   if ($('#all').is(":checked")){
 
     totalCost += 200;
-
   } else {
 
     totalCost - 200;
-
   }
 
   if ($('#js-frameworks').is(":checked")){
@@ -220,7 +243,6 @@ function checkCheckBox(){
     $('#express').prop('disabled', false);
     $('#express').parent().css("color", "#000");
     totalCost - 100;
-
   }
 
   if ($('#express').is(':checked')){
@@ -234,7 +256,6 @@ function checkCheckBox(){
     $('#js-frameworks').prop('disabled', false);
     $('#js-frameworks').parent().css("color", "#000");
     totalCost - 100;
-
   }
 
   if ($('#js-libs').is(":checked")) {
@@ -242,13 +263,11 @@ function checkCheckBox(){
     $('#node').prop('disabled', true);
     $('#node').parent().css("color", "#7c8f9b");
     totalCost += 100;
-
   } else {
 
     $('#node').prop('disabled', false);
     $('#node').parent().css("color", "#000");
     totalCost - 100;
-
   }
 
   if ($('#node').is(":checked")){
@@ -256,18 +275,16 @@ function checkCheckBox(){
     $('#js-libs').prop('disabled', true);
     $('#js-libs').parent().css("color", "#7c8f9b");
     totalCost += 100;
-
   } else {
 
     $('#js-libs').prop('disabled', false);
     $('#js-libs').parent().css("color", "#000");
     totalCost - 100;
-
   }
 
   if ($('#build-tools').is(":checked")){
 
-  totalCost += 100;
+    totalCost += 100;
 
   } else {
 
@@ -277,7 +294,6 @@ function checkCheckBox(){
   if ($('#npm').is(":checked")){
 
     totalCost += 100;
-
   } else {
 
     totalCost - 100;
@@ -285,17 +301,20 @@ function checkCheckBox(){
 
   //Displays the non-zero total amount to be charged to user based on user checkbox input
   if (totalCost != 0){
+    
     $('#totalCost').show();
     
     $('#totalCost').text(function(){
       return 'Total: $' + totalCost;
     });
-
   }
 }
 
 //When user selects a payment option, the appropriate information/forms are displayed while all other payment type information is hidden
 function checkPaymentOption(){
+
+  //Hide (or reset) payment option error message and styling
+  $('#paymentError').hide();
 
   if($('select#payment').val() === 'credit card'){
 
@@ -317,75 +336,38 @@ function checkPaymentOption(){
     $('div#bitcoin-option').show();
 
   //If user selects "Select Payment Method" from the "Payment Info" dropdown  
-  } else {
+  } else if ($('select#payment').val() === 'select_method'){
 
     $('div#credit-card').hide();
     $('div#paypal-option').hide();
-    $('div#bitcoin-option').hide();    
-  }
+    $('div#bitcoin-option').hide();
 
+    //Display error message
+    $('#paymentError').show();
+  }
 }
 
-//Function checks all form elements for valid input, displays appropriate error messages and styles, if any,
-  //and submits form if all form elements are valid.
-function validateForm(){
-
-  //Hide error messages and stylings on page load
-    //Hide "please provide your name" error massesage and reset message style
-  $('#nameError').hide();
-  $('#nameLabel').css({'color': '#000', 'font-weight':'normal'});
-
-    //Hide "please provide a valid email address" error message and reset message style
-  $('#emailError').hide();
-  $('#emailLabel').css({'color': '#000', 'font-weight':'normal'});
-
-    //Hide 'Don\'t forget to pick a T-shirt' T-shirt choice error message
-  $('#shirtError').hide();
-
-    //Hide 'Please select an Activity' error message
-  $('#activityError').hide();
-
-    //Hide (reset) credit card error styles
-  $('#ccTitle').css({'color': '#000', 'font-weight':'normal'});
-  $('#zipTitle').css({'color': '#000', 'font-weight':'normal'});
-  $('#cvvTitle').css({'color': '#000', 'font-weight':'normal'});
-
-
-  //Initially hide the text input that should only show if user selects "Other" from the "Job Role" dropdown menu
-  $('#other-title').hide();
-
-  //VALIDATE NAME FUNCTION CALL ON CHANGE *******************
-  $('input#name').change(checkNameValue);
-
-  //VALIDATE EMAIL FUNCTION CALL ON CHANGE *******************
-  $('input#mail').change(checkEmailValue);
-
-
-  //Check that a t-shirt color has been chosen else display below error styles and message
-  if ($('select#color').val() === 'select-theme'){
-
-    $('#shirtError').show().css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
-  }
-
-  //Check if an activity is checked, and if not, display error message and style
-  if (!$("input:checkbox:checked").length){
-    
-    $('#activityError').show();
-  }  
+//Validate credit card number using the creditCardValidator plugin
+function checkCreditCardNumber(){
 
   //Check if credit card is the selected payment method
   if($('select#payment').val() === 'credit card'){
     
-    //Validate credit card number
     var ccNumber = $('#cc-number');
 
-    //Using creditCardValidator plugin to check for a valid credit card number based on 3 criteria, if invalid, display error styling
     if(!ccNumber.validateCreditCard().length_valid && !ccNumber.validateCreditCard().luhn_valid && !ccNumber.validateCreditCard().valid){
 
       $('#ccTitle').css({'color': '#9f3b53', 'font-weight':'500'});
     }
-    
-    //Validate zip code
+  }
+}
+
+//Validate zip code with RegEx
+function checkZipCode(){
+
+  //Check if credit card is the selected payment method
+  if($('select#payment').val() === 'credit card'){
+
     var zip = $('input#zip');
     var zip_regex = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
     
@@ -394,8 +376,15 @@ function validateForm(){
       
       $('#zipTitle').css({'color': '#9f3b53', 'font-weight':'500'});
     }
+  }
+}
 
-    //Validate cvv
+//Validate CVV with RegEx
+function checkCVV(){
+
+  //Check if credit card is the selected payment method
+  if($('select#payment').val() === 'credit card'){
+    
     var cvv = $("input#cvv");
     var cvv_regex = /^\d{3,4}$/;
 
@@ -404,5 +393,29 @@ function validateForm(){
           
       $('#cvvTitle').css({'color': '#9f3b53', 'font-weight':'500'});
     }
-  }  
+  }
+}
+
+//Function checks all form elements for valid input, displays appropriate error messages and styles, if any,
+  //and submits form if all form elements are valid.
+function setErrorStyles(){
+
+  //Hide error messages and stylings on page load
+    //Hide "please provide your name" error massesage and reset message style
+  $('#nameError').hide();
+  $('#nameLabel').css({'color': '#000', 'font-weight':'normal'});
+
+  //Hide 'Don\'t forget to pick a T-shirt' T-shirt choice error message
+  $('#shirtError').hide();
+
+  //Hide 'Please select an Activity' error message
+  $('#activityError').hide();
+
+  //Hide (reset) credit card error styles
+  $('#ccTitle').css({'color': '#000', 'font-weight':'normal'});
+  $('#zipTitle').css({'color': '#000', 'font-weight':'normal'});
+  $('#cvvTitle').css({'color': '#000', 'font-weight':'normal'});
+
+  //Initially hide the text input that should only show if user selects "Other" from the "Job Role" dropdown menu
+  $('#other-title').hide();
 }
