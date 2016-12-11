@@ -95,37 +95,29 @@ $('button[type="submit"]').click(function validateForm(e){
     //Validate email form on button click, adding error styling and preventing submit if invalid
     if (!checkEmailValue()){ e.preventDefault(); };
 
+    //***** VALIDATE JOB ROLL FUNCTION MISSING *****
+
+
     //Validate t-shirt design drop down on button click, adding error styling and preventing submit if invalid
-    if (!checkDesignValue()) { 
-      e.preventDefault();
+    if (!checkDesignValue()) { e.preventDefault(); }
 
-      //Check that a t-shirt color has been chosen else display below error styles and message
-      if ($('select#color').val() === 'select-theme'){
+    //***** VALIDATE THIS AND PROBABLY NEEDS RETURN STATEMENTS ******
+    if (!checkCheckBox()){ e.preventDefault(); }
 
-      $('#shirtError').show().css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
-      }
+    //Validate that payment option is chosen on button click, adding error styling and preventing submit if invalid
+    if(!checkPaymentOption()){ e.preventDefault(); }
+
+    //Check that credit card is chosen as payment option prior to calling validation functions
+    if($('select#payment').val() === 'credit card'){
+      //Validate credit card number on button click, adding error styling and preventing submit if invalid
+      if (!checkCreditCardNumber()){ e.preventDefault(); }
+
+      //Validate zip code on button click, adding error styling and preventing submit if invalid
+      if (!checkZipCode()){ e.preventDefault(); }
+
+      //Validate CVV on button click, adding error styling and preventing submit if invalid
+      if (!checkCVV()){ e.preventDefault(); }
     }
-
-    if (!checkCheckBox()){ 
-
-      e.preventDefault();
-        
-      //Check if an activity is checked, and if not, display error message and style
-      if (!$("input:checkbox:checked").length){
-    
-        $('#activityError').show();
-      }
-    }
-
-    //Validate credit card number on button click, adding error styling and preventing submit if invalid
-    if (!checkCreditCardNumber()){ e.preventDefault(); }
-
-    //Validate zip code on button click, adding error styling and preventing submit if invalid
-    if (!checkZipCode()){ e.preventDefault(); }
-
-    //Validate CVV on button click, adding error styling and preventing submit if invalid
-    if (!checkCVV()){ e.preventDefault(); }
-
 
 });
 
@@ -139,6 +131,12 @@ function checkNameValue(){
     
     $('#nameLabel').css({'color': '#9f3b53', 'font-weight':'500'});
     $('#nameError').show().css({'color': '#9f3b53', 'font-weight':'500'});
+    return false;
+
+  } else { 
+
+      return true; 
+  
   }
 }
 
@@ -158,6 +156,11 @@ function checkEmailValue(){
         
     $('#emailLabel').css({'color': '#9f3b53', 'font-weight':'500'});
     $('#emailError').show().css({'color': '#9f3b53', 'font-weight':'500'});
+    return false;
+  } else {
+
+    return true;
+
   }
 
 }
@@ -214,6 +217,16 @@ function checkDesignValue(){
       //Else if design value is not one of the choices, hide options except "<-- Please select T-shirt theme"
       $('select#color').children(':nth-child(n+1)').hide(); 
   }
+
+
+  //Check that a t-shirt color has been chosen else display below error styles and message
+  if ($('select#color').val() === 'select-theme'){
+
+    $('#shirtError').show().css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
+    return false;
+    else {
+      return true;
+    }
 }
 
 //Function checks for and disables conflicting events depending on checkboxes checked by the user and
@@ -300,13 +313,22 @@ function checkCheckBox(){
   }
 
   //Displays the non-zero total amount to be charged to user based on user checkbox input
-  if (totalCost != 0){
+  if (totalCost !== 0){
     
     $('#totalCost').show();
     
     $('#totalCost').text(function(){
       return 'Total: $' + totalCost;
     });
+    return true;
+  } else {
+
+      //       //Check if an activity is checked, and if not, display error message and style
+      // if (!$("input:checkbox:checked").length){
+    
+        $('#activityError').show();
+      // }
+        return false;
   }
 }
 
@@ -321,6 +343,7 @@ function checkPaymentOption(){
     $('div#credit-card').show();
     $('div#paypal-option').hide();
     $('div#bitcoin-option').hide();
+    return true;
 
 
   } else if ($('select#payment').val() === 'paypal'){
@@ -328,12 +351,14 @@ function checkPaymentOption(){
     $('div#credit-card').hide();
     $('div#paypal-option').show();
     $('div#bitcoin-option').hide();
+    return true;
 
   } else if($('select#payment').val() === 'bitcoin'){
 
     $('div#credit-card').hide();
     $('div#paypal-option').hide();
     $('div#bitcoin-option').show();
+    return true;
 
   //If user selects "Select Payment Method" from the "Payment Info" dropdown  
   } else if ($('select#payment').val() === 'select_method'){
@@ -344,6 +369,7 @@ function checkPaymentOption(){
 
     //Display error message
     $('#paymentError').show();
+    return false;
   }
 }
 
@@ -358,6 +384,9 @@ function checkCreditCardNumber(){
     if(!ccNumber.validateCreditCard().length_valid && !ccNumber.validateCreditCard().luhn_valid && !ccNumber.validateCreditCard().valid){
 
       $('#ccTitle').css({'color': '#9f3b53', 'font-weight':'500'});
+      return false;
+    } else {
+        return true;
     }
   }
 }
@@ -375,6 +404,9 @@ function checkZipCode(){
     if(!zip_regex.test(zip.val()) && !zip.val() != ""){
       
       $('#zipTitle').css({'color': '#9f3b53', 'font-weight':'500'});
+      return false;
+    } else {
+        return true;
     }
   }
 }
@@ -392,12 +424,14 @@ function checkCVV(){
     if(!cvv_regex.test(cvv.val()) && !cvv.val() != ""){ 
           
       $('#cvvTitle').css({'color': '#9f3b53', 'font-weight':'500'});
+      return false;
+    } else {
+        return true;
     }
   }
 }
 
-//Function checks all form elements for valid input, displays appropriate error messages and styles, if any,
-  //and submits form if all form elements are valid.
+//Function resets all error styles to default styles
 function setErrorStyles(){
 
   //Hide error messages and stylings on page load
