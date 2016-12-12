@@ -85,40 +85,67 @@ $('select#payment').change(function validatePaymentOption(e){
   checkPaymentOption();
 });
 
-//Apply click handler on submit button to fire function on click to prevent invalid data form submissions
+//Apply submit handler on submit button to fire function on submit to prevent invalid data form submissions
 $('button[type="submit"]').click(function validateForm(e){
     
-    setErrorStyles();
-    //Validate name form on button click, adding error styling and preventing submit if invalid
-    if (!checkNameValue()){ e.preventDefault(); }
+  setErrorStyles();
+  //Validate name form on submit, adding error styling and preventing submit if invalid
+  if (!checkNameValue()){ e.preventDefault(); }
 
-    //Validate email form on button click, adding error styling and preventing submit if invalid
-    if (!checkEmailValue()){ e.preventDefault(); };
+  //Validate email form on submit, adding error styling and preventing submit if invalid
+  if (!checkEmailValue()){ e.preventDefault(); };
 
-    //***** VALIDATE JOB ROLL FUNCTION MISSING *****
+  //Validate t-shirt design drop down on submit, adding error styling and preventing submit if invalid
+  if (!checkDesignValue()) { 
 
+    //Check that a t-shirt color has been chosen else display below error styles and message
+    if ($('select#color').val() === 'select-theme'){
 
-    //Validate t-shirt design drop down on button click, adding error styling and preventing submit if invalid
-    if (!checkDesignValue()) { e.preventDefault(); }
+      $('#shirtError').show().css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
+      e.preventDefault();
 
-    //***** VALIDATE THIS AND PROBABLY NEEDS RETURN STATEMENTS ******
-    if (!checkCheckBox()){ e.preventDefault(); }
+    } 
+  }
 
-    //Validate that payment option is chosen on button click, adding error styling and preventing submit if invalid
-    if(!checkPaymentOption()){ e.preventDefault(); }
+  if (!checkCheckBox()){ 
 
-    //Check that credit card is chosen as payment option prior to calling validation functions
-    if($('select#payment').val() === 'credit card'){
-      //Validate credit card number on button click, adding error styling and preventing submit if invalid
-      if (!checkCreditCardNumber()){ e.preventDefault(); }
+    //Check if an activity is checked, and if not, display error message and style and prevent submission
+    if (!$("input:checkbox:checked").length){
+    
+      $('#activityError').show();
+      e.preventDefault();
 
-      //Validate zip code on button click, adding error styling and preventing submit if invalid
-      if (!checkZipCode()){ e.preventDefault(); }
+    } 
+  }
 
-      //Validate CVV on button click, adding error styling and preventing submit if invalid
-      if (!checkCVV()){ e.preventDefault(); }
-    }
+  //Check that Credit Card is selected payment option
+  if($('select#payment').val() === 'credit card'){
+    
+    //Validate credit card number on button submit, adding error styling and preventing submit if invalid
+    if (!checkCreditCardNumber()){ e.preventDefault(); }
 
+    //Validate zip code on button submit, adding error styling and preventing submit if invalid
+    if (!checkZipCode()){ e.preventDefault(); }
+
+    //Validate CVV on button submit, adding error styling and preventing submit if invalid
+    if (!checkCVV()){ e.preventDefault(); }
+  }
+    
+  //Check that PayPal is selected payment option
+  if($('select#payment').val() === 'paypal'){
+      
+    //Validate PayPal
+      //Submit and send user to PayPal href
+
+  }
+    
+  //Check that Bitcoin is selected payment option
+  if($('select#payment').val() === 'bitcoin'){
+      
+    //Validate Bitcoin
+      //Submit and send user to Bitcoin href
+
+  }
 });
 
 
@@ -133,10 +160,10 @@ function checkNameValue(){
     $('#nameError').show().css({'color': '#9f3b53', 'font-weight':'500'});
     return false;
 
-  } else { 
+  } else {
 
-      return true; 
-  
+    return true;
+
   }
 }
 
@@ -157,12 +184,12 @@ function checkEmailValue(){
     $('#emailLabel').css({'color': '#9f3b53', 'font-weight':'500'});
     $('#emailError').show().css({'color': '#9f3b53', 'font-weight':'500'});
     return false;
+
   } else {
 
-    return true;
+     return true;
 
   }
-
 }
 
 
@@ -176,6 +203,7 @@ function checkJobRoleValue(){
   } else{
 
     $('#other-title').hide();
+
   }
 }
 
@@ -189,6 +217,7 @@ function checkDesignValue(){
     $("#color").val("select-theme");
     $('#colors-js-puns').hide();
     $('select#color').children().hide();
+
   } else {
 
     $('#colors-js-puns').show();
@@ -212,21 +241,12 @@ function checkDesignValue(){
     $('select#color').children().show();
     $('select#color').children(':nth-child(-n+4)').hide();
     $('#select-theme').hide();
+
   } else {
 
       //Else if design value is not one of the choices, hide options except "<-- Please select T-shirt theme"
-      $('select#color').children(':nth-child(n+1)').hide(); 
-  }
+      $('select#color').children(':nth-child(n+1)').hide();
 
-
-  //Check that a t-shirt color has been chosen else display below error styles and message
-  if ($('select#color').val() === 'select-theme'){
-
-    $('#shirtError').show().css({'color': '#9f3b53', 'font-weight':'500', 'font-size':'16px'});
-    return false;
-    else {
-      return true;
-    }
   }
 }
 
@@ -241,6 +261,7 @@ function checkCheckBox(){
   if ($('#all').is(":checked")){
 
     totalCost += 200;
+
   } else {
 
     totalCost - 200;
@@ -257,6 +278,7 @@ function checkCheckBox(){
     $('#express').prop('disabled', false);
     $('#express').parent().css("color", "#000");
     totalCost - 100;
+
   }
 
   if ($('#express').is(':checked')){
@@ -270,6 +292,7 @@ function checkCheckBox(){
     $('#js-frameworks').prop('disabled', false);
     $('#js-frameworks').parent().css("color", "#000");
     totalCost - 100;
+
   }
 
   if ($('#js-libs').is(":checked")) {
@@ -277,6 +300,7 @@ function checkCheckBox(){
     $('#node').prop('disabled', true);
     $('#node').parent().css("color", "#7c8f9b");
     totalCost += 100;
+
   } else {
 
     $('#node').prop('disabled', false);
@@ -289,11 +313,13 @@ function checkCheckBox(){
     $('#js-libs').prop('disabled', true);
     $('#js-libs').parent().css("color", "#7c8f9b");
     totalCost += 100;
+
   } else {
 
     $('#js-libs').prop('disabled', false);
     $('#js-libs').parent().css("color", "#000");
     totalCost - 100;
+
   }
 
   if ($('#build-tools').is(":checked")){
@@ -308,28 +334,22 @@ function checkCheckBox(){
   if ($('#npm').is(":checked")){
 
     totalCost += 100;
+
   } else {
 
     totalCost - 100;
   }
 
   //Displays the non-zero total amount to be charged to user based on user checkbox input
-  if (totalCost !== 0){
+  if (totalCost != 0){
     
     $('#totalCost').show();
     
     $('#totalCost').text(function(){
-      return 'Total: $' + totalCost;
-    });
-    return true;
-  } else {
 
-      //       //Check if an activity is checked, and if not, display error message and style
-      // if (!$("input:checkbox:checked").length){
-    
-        $('#activityError').show();
-      // }
-        return false;
+      return 'Total: $' + totalCost;
+
+    });
   }
 }
 
@@ -344,22 +364,18 @@ function checkPaymentOption(){
     $('div#credit-card').show();
     $('div#paypal-option').hide();
     $('div#bitcoin-option').hide();
-    return true;
-
 
   } else if ($('select#payment').val() === 'paypal'){
 
     $('div#credit-card').hide();
     $('div#paypal-option').show();
     $('div#bitcoin-option').hide();
-    return true;
 
   } else if($('select#payment').val() === 'bitcoin'){
 
     $('div#credit-card').hide();
     $('div#paypal-option').hide();
     $('div#bitcoin-option').show();
-    return true;
 
   //If user selects "Select Payment Method" from the "Payment Info" dropdown  
   } else if ($('select#payment').val() === 'select_method'){
@@ -370,73 +386,66 @@ function checkPaymentOption(){
 
     //Display error message
     $('#paymentError').show();
-    return false;
   }
 }
 
 //Validate credit card number using the creditCardValidator plugin
 function checkCreditCardNumber(){
-
-  //Check if credit card is the selected payment method
-  if($('select#payment').val() === 'credit card'){
     
-    var ccNumber = $('#cc-number');
+  var ccNumber = $('#cc-number');
 
-    if(!ccNumber.validateCreditCard().length_valid && !ccNumber.validateCreditCard().luhn_valid && !ccNumber.validateCreditCard().valid){
+  if(!ccNumber.validateCreditCard().length_valid && !ccNumber.validateCreditCard().luhn_valid && !ccNumber.validateCreditCard().valid){
 
-      $('#ccTitle').css({'color': '#9f3b53', 'font-weight':'500'});
-      return false;
-    } else {
+    $('#ccTitle').css({'color': '#9f3b53', 'font-weight':'500'});
+    return false;
 
-        return true;
-    
-    }
+  } else {
+
+    return true;
+
   }
 }
+
 
 //Validate zip code with RegEx
 function checkZipCode(){
 
-  //Check if credit card is the selected payment method
-  if($('select#payment').val() === 'credit card'){
-
-    var zip = $('input#zip');
-    var zip_regex = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
+  var zip = $('input#zip');
+  var zip_regex = /(^\d{5}$)|(^\d{5}-\d{4}$)/;
     
-    //Check that zip code is valid, if not, apply error style
-    if(!zip_regex.test(zip.val()) && !zip.val() != ""){
+  //Check that zip code is valid, if not, apply error style
+  if(!zip_regex.test(zip.val()) && !zip.val() != ""){
       
-      $('#zipTitle').css({'color': '#9f3b53', 'font-weight':'500'});
-      return false;
-    } else {
+    $('#zipTitle').css({'color': '#9f3b53', 'font-weight':'500'});
+    return false;
 
-        return true;
-    
-    }
+  } else {
+
+    return true;
+
   }
 }
 
 //Validate CVV with RegEx
 function checkCVV(){
 
-  //Check if credit card is the selected payment method
-  if($('select#payment').val() === 'credit card'){
-    
-    var cvv = $("input#cvv");
-    var cvv_regex = /^\d{3,4}$/;
+  var cvv = $("input#cvv");
+  var cvv_regex = /^\d{3,4}$/;
 
-    //Check that CVV is valid and if not apply error styling
-    if(!cvv_regex.test(cvv.val()) && !cvv.val() != ""){ 
+  //Check that CVV is valid and if not apply error styling
+  if(!cvv_regex.test(cvv.val()) && !cvv.val() != ""){ 
           
-      $('#cvvTitle').css({'color': '#9f3b53', 'font-weight':'500'});
-      return false;
-    } else {
-        return true;
-    }
+    $('#cvvTitle').css({'color': '#9f3b53', 'font-weight':'500'});
+    return false;
+
+  } else {
+
+      return true;
+
   }
 }
 
-//Function resets all error styles to default styles
+//Function displays appropriate error messages and styles
 function setErrorStyles(){
 
   //Hide error messages and stylings on page load
@@ -455,6 +464,6 @@ function setErrorStyles(){
   $('#zipTitle').css({'color': '#000', 'font-weight':'normal'});
   $('#cvvTitle').css({'color': '#000', 'font-weight':'normal'});
 
-  //Initially hide the text input that should only show if user selects "Other" from the "Job Role" dropdown menu
+  //Hide the text input that should only show if user selects "Other" from the "Job Role" dropdown menu
   $('#other-title').hide();
 }
