@@ -227,6 +227,7 @@ function checkDesignValue(){
     else {
       return true;
     }
+  }
 }
 
 //Function checks for and disables conflicting events depending on checkboxes checked by the user and
@@ -386,7 +387,9 @@ function checkCreditCardNumber(){
       $('#ccTitle').css({'color': '#9f3b53', 'font-weight':'500'});
       return false;
     } else {
+
         return true;
+    
     }
   }
 }
@@ -406,7 +409,9 @@ function checkZipCode(){
       $('#zipTitle').css({'color': '#9f3b53', 'font-weight':'500'});
       return false;
     } else {
+
         return true;
+    
     }
   }
 }
